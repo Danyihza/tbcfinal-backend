@@ -1,30 +1,14 @@
-FROM php:8.0-fpm
+FROM php:7.3.2-apache-stretch
 
-# Copy composer.lock and composer.json
-COPY ./composer.lock* ./composer.json* /var/www/
+LABEL maintainer="Gbenga Oni B. <onigbenga@yahoo.ca>" \
+      version="1.0"
 
-# Set working directory
-WORKDIR /var/www
+COPY --chown=www-data:www-data . /srv/app
 
-# Install extensions
-RUN docker-php-ext-install tokenizer mysqli pdo_mysql
+COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf 
 
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+WORKDIR /srv/app
 
-# Add user for laravel application
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
-
-# Copy existing application directory contents
-COPY . /var/www
-
-# Copy existing application directory permissions
-COPY --chown=www:www . /var/www
-
-# Change current user to www
-USER www
-
-# Expose port 9000 and start php-fpm server
-EXPOSE 9000
-CMD ["php-fpm"]
+RUN docker-php-ext-install mbstring pdo pdo_mysql \ 
+    && a2enmod rewrite negotiation \
+    && docker-php-ext-install opcache
