@@ -30,6 +30,7 @@ phases:
   post_build:
     commands:
     # - docker push $REPOSITORY_URI:$IMAGE_TAG
+    - docker push $REPOSITORY_URI:$IMAGE_TAG
     - echo Writing image definitions file...
     - printf '[{"name":"tbc-container-newest","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
