@@ -13,8 +13,7 @@ phases:
       - aws --version
       - eval $(aws ecr get-login --region us-east-1 --no-include-email | sed 's|https://||')
       - REPOSITORY_URI=547328915151.dkr.ecr.us-east-1.amazonaws.com/tbcfinal
-      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - IMAGE_TAG=1.0
   build:
     commands:
       - echo Build started on `date`
