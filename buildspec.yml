@@ -24,9 +24,10 @@ phases:
     - echo creating .env file..
     - cp .env.production .env
     - echo generating app key
+    - docker
     - php artisan key:generate
     - echo Building the Docker image...
-    - docker build -t $REPOSITORY_URI:latest .
+    - docker build -t 547328915151.dkr.ecr.us-east-1.amazonaws.com/tbcfinal:latest .
     - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
