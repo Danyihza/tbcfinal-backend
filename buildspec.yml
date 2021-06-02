@@ -11,7 +11,7 @@ phases:
     commands:
     - echo Logging in to Amazon ECR...
     - aws --version
-    - eval $(aws ecr get-login --region us-east-1 --no-include-email | sed 's|https://||')
+    - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 547328915151.dkr.ecr.us-east-1.amazonaws.com
     - REPOSITORY_URI=547328915151.dkr.ecr.us-east-1.amazonaws.com/tbcfinal
     - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
     - IMAGE_TAG=${COMMIT_HASH:=latest}
@@ -30,7 +30,8 @@ phases:
   post_build:
     commands:
     # - docker push $REPOSITORY_URI:$IMAGE_TAG
-    - docker push $REPOSITORY_URI:$IMAGE_TAG
+    - docker push 547328915151.dkr.ecr.us-east-1.amazonaws.com/tbcfinal:latest
+    # - docker push $REPOSITORY_URI:$IMAGE_TAG
     - echo Writing image definitions file...
     - printf '[{"name":"tbc-container-newest","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:

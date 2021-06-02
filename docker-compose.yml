@@ -8,7 +8,7 @@ services:
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
     ports:
         ## run the webserver on port 8080 ##
-      - "8082:80"
+      - "80:80"
     links:
       - app
   app:
