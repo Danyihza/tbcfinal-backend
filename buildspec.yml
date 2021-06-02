@@ -27,8 +27,8 @@ phases:
     - docker
     - php artisan key:generate
     - echo Building the Docker image...
-    - docker build -t 547328915151.dkr.ecr.us-east-1.amazonaws.com/tbcfinal:latest .
-    - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+    - docker build -t tbcfinal:latest .
+    - docker tag tbcfinal:latest $REPOSITORY_URI:latest
   post_build:
     commands:
     # - docker push $REPOSITORY_URI:$IMAGE_TAG
