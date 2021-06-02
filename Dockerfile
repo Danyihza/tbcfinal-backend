@@ -1,4 +1,4 @@
-FROM php:latest
+FROM php:7.4-cli
 
 LABEL maintainer="Gbenga Oni B. <onigbenga@yahoo.ca>" \
       version="1.0"
