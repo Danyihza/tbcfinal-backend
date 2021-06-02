@@ -27,7 +27,7 @@ phases:
     - docker
     - php artisan key:generate
     - echo Building the Docker image...
-    - docker build -t tbcfinal:latest .
+    - docker build -t tbcfinal .
     - docker tag tbcfinal:latest $REPOSITORY_URI:latest
   post_build:
     commands:
@@ -35,6 +35,6 @@ phases:
     - docker push 547328915151.dkr.ecr.us-east-1.amazonaws.com/tbcfinal:latest
     # - docker push $REPOSITORY_URI:$IMAGE_TAG
     - echo Writing image definitions file...
-    - printf '[{"name":"tbc-container-newest","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+    - printf '[{"name":"tbc-container-newest","imageUri":"%s"}]' $REPOSITORY_URI:latest > imagedefinitions.json
 artifacts:
     files: imagedefinitions.json
