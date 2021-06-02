@@ -1,4 +1,4 @@
-FROM php:8.0.6-apache
+FROM php:7.4-apache-buster
 
 LABEL maintainer="Gbenga Oni B. <onigbenga@yahoo.ca>" \
       version="1.0"

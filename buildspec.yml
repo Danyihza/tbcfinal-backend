@@ -6,11 +6,12 @@ phases:
     - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
     - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
     runtime-versions:
-      php: 8.0
+      php: 7.4
   pre_build:
     commands:
     - echo Logging in to Amazon ECR...
     - aws --version
+    - apt-install 
     - eval $(aws ecr get-login --region us-east-1 --no-include-email | sed 's|https://||')
     - REPOSITORY_URI=547328915151.dkr.ecr.us-east-1.amazonaws.com/tbcfinal
     - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
