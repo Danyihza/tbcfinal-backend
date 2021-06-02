@@ -11,7 +11,6 @@ phases:
     commands:
     - echo Logging in to Amazon ECR...
     - aws --version
-    # - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 547328915151.dkr.ecr.us-east-1.amazonaws.com
     - eval $(aws ecr get-login --region us-east-1 --no-include-email | sed 's|https://||')
     - REPOSITORY_URI=547328915151.dkr.ecr.us-east-1.amazonaws.com/tbcfinal
     - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
@@ -24,17 +23,15 @@ phases:
     - echo creating .env file..
     - cp .env.production .env
     - echo generating app key
-    - docker
     - php artisan key:generate
     - echo Building the Docker image...
-    - docker build -t tbcfinal .
-    - docker tag tbcfinal:latest $REPOSITORY_URI:latest
+    - docker build -t $REPOSITORY_URI:latest .
+    - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
     # - docker push $REPOSITORY_URI:$IMAGE_TAG
-    - docker push 547328915151.dkr.ecr.us-east-1.amazonaws.com/tbcfinal:latest
-    # - docker push $REPOSITORY_URI:$IMAGE_TAG
+    - docker push $REPOSITORY_URI:$IMAGE_TAG
     - echo Writing image definitions file...
-    - printf '[{"name":"tbc-container-newest","imageUri":"%s"}]' $REPOSITORY_URI:latest > imagedefinitions.json
+    - printf '[{"name":"tbc-container-newest","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
     files: imagedefinitions.json
