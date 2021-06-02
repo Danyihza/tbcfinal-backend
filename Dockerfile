@@ -1,4 +1,4 @@
-FROM php:7.3.2-apache-stretch
+FROM php:8.0.6-apache
 
 LABEL maintainer="Gbenga Oni B. <onigbenga@yahoo.ca>" \
       version="1.0"
