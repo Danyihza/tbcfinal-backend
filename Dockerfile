@@ -1,4 +1,4 @@
-FROM php:7.4-apache-buster
+FROM php:7.3.2-apache-stretch
 
 LABEL maintainer="Gbenga Oni B. <onigbenga@yahoo.ca>" \
       version="1.0"
@@ -11,4 +11,5 @@ WORKDIR /srv/app
 
 RUN docker-php-ext-install mbstring pdo pdo_mysql \ 
     && a2enmod rewrite negotiation \
-    && docker-php-ext-install opcache
+    && docker-php-ext-install opcache \
+    && apt-get install -y php5-mysqlnd
