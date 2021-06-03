@@ -21,7 +21,8 @@
         <div class="modal-container">
             <div class="modal-left">
                 <h1 class="modal-title">SMART-HPV</h1>
-                <p class="modal-desc">Please enter your username and password and press login</p>
+                <!-- <p class="modal-desc">Please enter your username and password and press login</p> -->
+                <p class="modal-desc">Mohon Masukkan username dan password</p>
                 <!-- <p class="modal-desc text-danger"><?= $this->session->flashdata('error'); ?></p> -->
                 <form action="<?= base_url('Auth/login') ?>" method="post">
                     <div class="input-block <?= $this->session->flashdata('error') ? 'wrong' : '' ?>">
